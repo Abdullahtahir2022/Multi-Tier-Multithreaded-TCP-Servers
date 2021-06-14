@@ -3,6 +3,7 @@ import json
 
 address = "127.0.0.1"
 port = 5051
+au = []
 
 s = socket.socket()
 s.connect((address,port))
@@ -26,8 +27,10 @@ def get_output(s):
 def authentication(s):
     username = input("Input Username: ")
     password = input("Input Password: ")
-    s.send(username.encode("utf-8"))
-    s.send(password.encode("utf-8"))
+    au.append(username)
+    au.append(password)
+    login_dump = json.dumps(au)
+    s.send(login_dump.encode("utf-8"))
     Token = s.recv(1024).decode("utf-8")
     return Token
 

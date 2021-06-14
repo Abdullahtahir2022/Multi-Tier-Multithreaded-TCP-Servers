@@ -53,15 +53,12 @@ class Mythread(Thread):
 
         
     def authentication_Identity(self):
-        username = self.c_s.recv(1024).decode("utf-8")
-        password = self.c_s.recv(1024).decode("utf-8")
+        login = self.c_s.recv(1024).decode("utf-8")
         address = "127.0.0.1"
         port = 5055
         s = socket.socket()
         s.connect((address,port))
-        print(username,password)
-        s.send(username.encode("utf-8"))
-        s.send(password.encode("utf-8"))
+        s.send(login.encode("utf-8"))
         Token = s.recv(1024).decode("utf-8")
         return Token
 
