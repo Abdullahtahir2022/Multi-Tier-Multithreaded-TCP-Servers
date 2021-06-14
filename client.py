@@ -14,15 +14,18 @@ def get_funtionality(s):
     for data in service:
         print(data)
 
-def Enter_service(s):
+def Enter_service(s,Token):
     string = input("Enter a String: ")
     service_number = input("Enter a corresponding number: ")
     s.send(string.encode("utf-8"))
     s.send(service_number.encode("utf-8"))
+    s.send(Token.encode("utf-8"))
 
 def get_output(s):
-    string = s.recv(1024).decode("utf-8")
-    return string
+    ip = s.recv(1024).decode("utf-8")
+    port = s.recv(1024).decode("utf-8")
+    j_port = json.loads(port)
+    return ip,j_port
 
 def authentication(s):
     username = input("Input Username: ")
@@ -38,12 +41,13 @@ def authentication(s):
 
 
 Token = authentication(s)
-print(Token)
-'''
-get_funtionality(s)
-Enter_service(s)
-string = get_output(s)
-print(string)'''
+if(Token=="False"):
+    print("Invalid Crendentials")
+else:
+    get_funtionality(s)
+    Enter_service(s,Token)
+    address = get_output(s)
+    print(address)
 
 
 s.close()
