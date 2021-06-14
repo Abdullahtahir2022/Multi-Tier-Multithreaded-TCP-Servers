@@ -55,6 +55,7 @@ else:
     get_funtionality(s)
     Enter_service_no(s,Token)
     address = get_output(s)
+    print(address)
     skt = Connection_server(address)
     Service(skt,Token)
     output = skt.recv(1024).decode("utf-8")

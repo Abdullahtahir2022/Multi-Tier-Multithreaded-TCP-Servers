@@ -43,6 +43,27 @@ class Mythread(Thread):
             else:
                 self.Token_status = False
 
+    def Server_1(self):
+        ip = "127.0.0.1"
+        port = 5052
+        j_port = json.dumps(port)
+        self.c_s.send(ip.encode("utf-8"))
+        self.c_s.send(j_port.encode("utf-8"))
+
+    def Server_2(self):
+        ip = "127.0.0.1"
+        port = 5053
+        j_port = json.dumps(port)
+        self.c_s.send(ip.encode("utf-8"))
+        self.c_s.send(j_port.encode("utf-8"))
+
+    def Server_3(self):
+        ip = "127.0.0.1"
+        port = 5054
+        j_port = json.dumps(port)
+        self.c_s.send(ip.encode("utf-8"))
+        self.c_s.send(j_port.encode("utf-8"))
+
 
 
 
@@ -55,35 +76,22 @@ class Mythread(Thread):
             if self.Token_status == True:
                 self.Tokens.remove(Token)
                 self.c_s.send("True".encode("utf-8"))
-
             else:
                 self.c_s.send("False".encode("utf-8"))
+
+
         else:
             Token = self.authentication_Identity(output)
             if Token!="False":
                 self.Tokens.append(Token)
             self.c_s.send(Token.encode("utf-8"))
-
             self.send_functionality()
             values = self.get_client_requirnment()
             self.Token_Validation(values[1])
-
             if self.Token_status == True:
                 if(values[0]=="1"):
-                    ip = "127.0.0.1"
-                    port = 5052
-                    j_port = json.dumps(port)
-                    self.c_s.send(ip.encode("utf-8"))
-                    self.c_s.send(j_port.encode("utf-8"))
+                    self.Server_1()
                 elif(values[0]=="2"):
-                    ip = "127.0.0.1"
-                    port = 5053
-                    j_port = json.dumps(port)
-                    self.c_s.send(ip.encode("utf-8"))
-                    self.c_s.send(j_port.encode("utf-8"))
+                    self.Server_2()
                 elif(values[0]=="3"):
-                    ip = "127.0.0.1"
-                    port = 5054
-                    j_port = json.dumps(port)
-                    self.c_s.send(ip.encode("utf-8"))
-                    self.c_s.send(j_port.encode("utf-8"))
+                    self.Server_3()
