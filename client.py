@@ -16,7 +16,6 @@ def get_funtionality(s):
 
 def Enter_service_no(s,Token):
     service_number = input("Enter a corresponding number: ")
-    s.send(string.encode("utf-8"))
     s.send(service_number.encode("utf-8"))
     s.send(Token.encode("utf-8"))
 
@@ -36,15 +35,15 @@ def authentication(s):
     Token = s.recv(1024).decode("utf-8")
     return Token
 
-def Connection(addr):
+def Connection_server(addr):
     s = socket.socket()
     s.connect((addr[0],addr[1]))
     return s
 
 def Service(s,Token):
     string = input("Enter String: ")
-    skt.send(string.encode("utf-8"))
-    skt.send(Token.encode("utf-8"))
+    s.send(string.encode("utf-8"))
+    s.send(Token.encode("utf-8"))
 
 
 
@@ -56,8 +55,11 @@ else:
     get_funtionality(s)
     Enter_service_no(s,Token)
     address = get_output(s)
-    skt = Connection(address)
+    skt = Connection_server(address)
     Service(skt,Token)
+    output = skt.recv(1024).decode("utf-8")
+    print(output)
+    
     
 
 
