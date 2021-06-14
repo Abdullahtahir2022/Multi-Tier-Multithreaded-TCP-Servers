@@ -14,8 +14,7 @@ def get_funtionality(s):
     for data in service:
         print(data)
 
-def Enter_service(s,Token):
-    string = input("Enter a String: ")
+def Enter_service_no(s,Token):
     service_number = input("Enter a corresponding number: ")
     s.send(string.encode("utf-8"))
     s.send(service_number.encode("utf-8"))
@@ -37,6 +36,16 @@ def authentication(s):
     Token = s.recv(1024).decode("utf-8")
     return Token
 
+def Connection(addr):
+    s = socket.socket()
+    s.connect((addr[0],addr[1]))
+    return s
+
+def Service(s,Token):
+    string = input("Enter String: ")
+    skt.send(string.encode("utf-8"))
+    skt.send(Token.encode("utf-8"))
+
 
 
 
@@ -45,9 +54,13 @@ if(Token=="False"):
     print("Invalid Crendentials")
 else:
     get_funtionality(s)
-    Enter_service(s,Token)
+    Enter_service_no(s,Token)
     address = get_output(s)
-    print(address)
+    skt = Connection(address)
+    Service(skt,Token)
+    
+
+
 
 
 s.close()
